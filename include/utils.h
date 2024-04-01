@@ -9,10 +9,13 @@
 
 #include "constants.h"
 
-void visualizeInputs();
+namespace utilities
+{
+    void visualizeInputs();
 
-std::vector<bool> readOcclusions();
+    std::vector<bool> readOcclusions();
 
-std::vector<std::vector<int>> readGroundtruths();
+    std::vector<std::vector<int>> readGroundtruths();
 
-void visualizeGroundtruths(std::vector<std::vector<int>> groundtruths);
+    void visualizeGroundtruths(const std::vector<std::vector<int>> &groundtruths);
+}

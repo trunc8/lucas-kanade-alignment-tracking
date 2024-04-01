@@ -17,6 +17,6 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin")
 find_package(Eigen3 REQUIRED)
 find_package(OpenCV REQUIRED)
 
-add_executable(main src/main.cpp src/utils.cpp)
+add_executable(main src/main.cpp src/tracker.cpp src/utils.cpp)
 target_link_libraries(main ${OpenCV_LIBS} Eigen3::Eigen)
 target_include_directories(main PRIVATE include)
