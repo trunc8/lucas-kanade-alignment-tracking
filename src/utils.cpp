@@ -7,13 +7,13 @@ namespace utilities
         cv::Mat image;
         std::stringstream ss;
 
-        for (int i = 0; i < NUM_IMAGES; i++)
+        for (size_t img_idx = 0; img_idx < constants::num_frames; img_idx++)
         {
             ss.str("");
             ss.width(3);
             ss.fill('0');
-            ss << i + 1;
-            image = cv::imread("../data/00000" + ss.str() + ".jpg", cv::IMREAD_COLOR);
+            ss << img_idx + 1;
+            image = cv::imread(constants::data_path + "/00000" + ss.str() + ".jpg", cv::IMREAD_COLOR);
 
             if (!image.data)
             {
@@ -21,18 +21,19 @@ namespace utilities
                 return;
             }
 
-            cv::namedWindow("Display image", cv::WINDOW_AUTOSIZE);
-            cv::imshow("Display image", image);
+            cv::namedWindow("Visualizing Data Frames", cv::WINDOW_AUTOSIZE);
+            cv::imshow("Visualizing Data Frames", image);
 
-            cv::waitKey(1);
+            cv::waitKey(10);
         }
+        cv::destroyAllWindows();
     }
-
+    
     std::vector<bool> readOcclusions()
     {
-        std::vector<bool> occlusions(NUM_IMAGES, false);
+        std::vector<bool> occlusions(constants::num_frames, false);
         std::ifstream occlusion_file;
-        std::string occlusion_filename = "../data/occlusion.label";
+        std::string occlusion_filename = constants::data_path + "/occlusion.label";
         occlusion_file.open(occlusion_filename);
 
         if (!occlusion_file.is_open())
@@ -43,7 +44,7 @@ namespace utilities
 
         std::cout << occlusion_filename + " is opened" << std::endl;
 
-        for (int img_idx = 0; img_idx < NUM_IMAGES; img_idx++)
+        for (size_t img_idx = 0; img_idx < constants::num_frames; img_idx++)
         {
             // Each line contains one bool: occluded
             std::string str_val;
@@ -56,9 +57,9 @@ namespace utilities
 
     std::vector<std::vector<int>> readGroundtruths()
     {
-        std::vector<std::vector<int>> groundtruths(NUM_IMAGES, std::vector<int>(8, 0));
+        std::vector<std::vector<int>> groundtruths(constants::num_frames, std::vector<int>(8, 0));
         std::ifstream groundtruth_file;
-        std::string groundtruth_filename = "../data/groundtruth.txt";
+        std::string groundtruth_filename = constants::data_path + "/groundtruth.txt";
         groundtruth_file.open(groundtruth_filename);
 
         if (!groundtruth_file.is_open())
@@ -69,13 +70,13 @@ namespace utilities
 
         std::cout << groundtruth_filename + " is opened" << std::endl;
 
-        for (int img_idx = 0; img_idx < NUM_IMAGES; img_idx++)
+        for (size_t img_idx = 0; img_idx < constants::num_frames; img_idx++)
         {
             // x1, y1, x2, y2, x3, y3, x4, y4
             std::string line;
             getline(groundtruth_file, line);
             std::istringstream iline(line);
-            for (int i = 0; i < 8; i++)
+            for (size_t i = 0; i < 8; i++)
             {
                 std::string str_val;
                 getline(iline, str_val, ',');
@@ -91,32 +92,33 @@ namespace utilities
         cv::Mat image;
         std::stringstream ss;
 
-        for (int i = 0; i < NUM_IMAGES; i++)
+        for (size_t img_idx = 0; img_idx < constants::num_frames; img_idx++)
         {
             ss.str("");
             ss.width(3);
             ss.fill('0');
-            ss << i + 1;
-            image = cv::imread("../data/00000" + ss.str() + ".jpg", cv::IMREAD_COLOR);
+            ss << img_idx + 1;
+            image = cv::imread(constants::data_path + "/00000" + ss.str() + ".jpg", cv::IMREAD_COLOR);
 
             if (!image.data)
             {
-                std::cout << "No image data" << std::endl;
+                std::cout << "No image data! Returning\n\n" << std::endl;
                 return;
             }
-            int x2 = groundtruths[i][2];
-            int y2 = groundtruths[i][3];
-            int x4 = groundtruths[i][6];
-            int y4 = groundtruths[i][7];
+            int x2 = groundtruths[img_idx][2];
+            int y2 = groundtruths[img_idx][3];
+            int x4 = groundtruths[img_idx][6];
+            int y4 = groundtruths[img_idx][7];
             cv::Point2i org{x2, y2};
             cv::Size2i sz(x4 - x2, y4 - y2);
 
             cv::rectangle(image, cv::Rect(org, sz), cv::Scalar(0, 255, 0, 255));
 
-            cv::namedWindow("Display image", cv::WINDOW_AUTOSIZE);
-            cv::imshow("Display image", image);
+            cv::namedWindow("Visualizing Groundtruth Bounding Boxes", cv::WINDOW_AUTOSIZE);
+            cv::imshow("Visualizing Groundtruth Bounding Boxes", image);
 
-            cv::waitKey(1);
+            cv::waitKey(10);
         }
+        cv::destroyAllWindows();
     }
 }
