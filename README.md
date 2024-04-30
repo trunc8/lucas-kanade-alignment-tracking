@@ -27,7 +27,7 @@ Momentum + Inverse Baker Method (Python-only implementation)
 - OpenCV
 - Eigen
 
-### Steps
+### Build Steps
 ```sh
 # Check if you already have the dependencies using
 pkg-config --modversion opencv4
@@ -54,8 +54,13 @@ cmake --build .
 ctest
 ```
 
-TODO:
-
+### Future work
 - [ ] Assumes the availability of `groundtruth.txt` for calculation of IoU. Add a flag that allows us to run on unlabelled data.
 - [ ] Implement occlusion detection function to remove dependence on `occlusion.label` groundtruth.
 - [ ] Perform LKT over features rather than pixels
+
+### Author(s)
+
+* **Siddharth Saha** - [trunc8](https://github.com/trunc8)
+
+<p align='center'>Created with :heart: by <a href="https://www.linkedin.com/in/sahasiddharth611/">Siddharth</a></p>
