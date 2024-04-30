@@ -1,3 +1,32 @@
+# Vehicle Tracking using Lucas Kanade Forward Alignment Method
+
+### Terminology
+**LKT**: Lukas Kanade Tracker
+
+**Momentum**: Averaging the transformation matrix over the previous frames
+
+### Demos
+#### Expected output on executing the code
+[Demo video](https://youtu.be/Kp99f36Dc38)
+
+#### Result gifs
+
+Momentum + LKT with Affine Transform (C++ and Python implementations)
+
+![Momentum_LK_affine Demo](results/Momentum_LK_affine.gif)
+
+Momentum + LKT with Translation-only Transform (Python-only implementation)
+
+![Momentum_LK_translation Demo](results/Momentum_LK_translation.gif)
+
+Momentum + Inverse Baker Method (Python-only implementation)
+
+![Momentum_MB Demo](results/Momentum_MB.gif)
+
+### Dependencies
+- OpenCV
+- Eigen
+
 ### Steps
 ```sh
 # Check if you already have the dependencies using
@@ -29,3 +58,4 @@ TODO:
 
 - [ ] Assumes the availability of `groundtruth.txt` for calculation of IoU. Add a flag that allows us to run on unlabelled data.
 - [ ] Implement occlusion detection function to remove dependence on `occlusion.label` groundtruth.
+- [ ] Perform LKT over features rather than pixels
